@@ -138,7 +138,7 @@ if ( SERVER ) then
 elseif ( CLIENT ) 
 	
 	function fnet.SendToServer( nwstr, ... )
-		fnet.Write( { ... } )
+		fnet.Write( nwstr, { ... } )
 		net.SendToServer()
 	end
 	
