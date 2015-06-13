@@ -57,6 +57,8 @@ local debug = "[FreeNet] %s( Str=%s, To=<%s>, Val=<%s> )"
 --	Wrapper function for net.Broadcast. Sends a net message to all connected 
 --	players currently on the server.
 --
+--	http://wiki.garrysmod.com/page/net/Broadcast
+--
 --	@param nwstr - the name of the net message
 --	@param ...   - varags (comma separated list of values)
 --]]--
@@ -69,10 +71,32 @@ end
 
 --[[--------------------------------------------------------------------------
 --
+-- 	fnet.Send( string, player or table, varags )
+--
+--	Wrapper function for net.Send. Sends a net message to the specified player
+--	or table of players.
+--
+--	http://wiki.garrysmod.com/page/net/Send
+--
+--	@param nwstr - the name of the net message
+--	@param plys  - the player(s) to send the net message to
+--	@param ...   - varags (comma separated list of values)
+--]]--
+function fnet.Send( nwstr, plys, ... )
+	if ( fnet.Debug:GetBool() ) then print( debug:format( "fnet.Sent", nwstr or "nil", plys or "nil", unpack( {...} ) or "nil" ) ) end
+
+	fnet.Write( nwstr, {...} )
+	net.Send( plys )
+end
+
+--[[--------------------------------------------------------------------------
+--
 -- 	fnet.SendOmit( string, player or table, varags )
 --
 --	Wrapper function for net.SendOmit. Sends a net message to all connected
 --	players, EXCLUDING the given player.
+--
+--	http://wiki.garrysmod.com/page/net/SendOmit
 --
 --	@param nwstr - the name of the net message
 --	@param ply   - the player entity to omit (ignore) from the message
@@ -88,29 +112,13 @@ end
 
 --[[--------------------------------------------------------------------------
 --
--- 	fnet.Send( string, player or table, varags )
---
---	Wrapper function for net.Send. Sends a net message to the specified player
---	or table of players.
---
---	@param nwstr - the name of the net message
---	@param plys  - the player(s) to send the net message to
---	@param ...   - varags (comma separated list of values)
---]]--
-function fnet.Send( nwstr, plys, ... )
-	if ( fnet.Debug:GetBool() ) then print( debug:format( "fnet.Sent", nwstr or "nil", plys or "nil", unpack( {...} ) or "nil" ) ) end
-
-	fnet.Write( nwstr, {...} )
-	net.Send( plys )
-end
-
---[[--------------------------------------------------------------------------
---
 -- 	fnet.SendPVS( string, vector, varags )
 --
 --	Wrapper function for net.SendPVS. Sends a net message to any players that
 --	are within the given vector's PVS (potentially visible set).
 --	I.e., to players that potentially see the given vector position.
+--
+--	http://wiki.garrysmod.com/page/net/SendPVS
 --
 --	@param nwstr - the name of the net message
 --	@param vec   - the vector position
@@ -131,6 +139,8 @@ end
 --	Wrapper function for net.SendPAS. Sends a net message to any players that
 --	are within the given vector's PAS (potentially audible set).
 --	I.e., to players that potentially hear sound at the given vector position.
+--
+--	http://wiki.garrysmod.com/page/net/SendPAS
 --
 --	@param nwstr - the name of the net message
 --	@param vec   - the vector position
