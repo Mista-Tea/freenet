@@ -60,12 +60,12 @@ fnet.SendToServer( nwstr, varags ... )
 
 ### Design Decisions
 
-FreeNet was designed to make **_sending_** net messages very quick and painless. However, **_receiving_** net messages and reading the corresponding types are still left to the developer (you).
+FreeNet was designed to make **_sending_** net messages very quick and painless. However, **_receiving_** net messages and reading the corresponding types is still left to the developer (you).
 
 Some tradeoffs had to be made to ensure that you as a developer could read back exactly what was automatically written to the net message for you.
 
-GLua provides functions in the net library to write Ints, Unsigned Ints, Bools, Floats, and Doubles. However, Lua treats all numbers as floats. This means there is no distinction between 1 (integer, bit, boolean), 1.0 (unsigned, float, double), and -1.0 (signed, float, double). Determining what function a given number in Lua should use is not a trivial issue. Even with the ability to automatically determine which number function to call, the client has no idea what corresponding number function they should call or how many bits to read. 
+GLua provides functions in the net library to write Ints, Unsigned Ints, Floats, and Doubles. However, Lua treats all numbers as floats. This means there is no distinction between 1 (integer, bit), 1.0 (unsigned, float, double), and -1.0 (signed, float, double). Determining what function a given number in Lua should use is not a trivial issue. Even with the ability to automatically determine which number function to call, the client has no idea what corresponding number function they should call or how many bits to read. 
 
-One solution would be to replace every net.Write* call with net.WriteUInt( #, 8 ) and net.WriteType( * ), the former being the number of bits to read (if a number). However, this increases the size of the net message as every parameter added would result in an additional 2 bytes (1 for # bits and 1 for type), not to mention increased complexity due to havingto compute which exact format the number should be sent as (Bit/Bool,Int,UInt,Float,Double).
+One solution would be to replace every net.Write* call with net.WriteUInt( #, 8 ) and net.WriteType( * ), the former being the number of bits to read (if a number). However, this increases the size of the net message as every parameter added would result in an additional 2 bytes (1 for # bits and 1 for type), not to mention increased complexity due computing which exact format the number should be sent as (Bit,Int,UInt,Float,Double).
 
-**As a result**, FreeNet has been designed to write _all_ numbers as **floats**. Unless you require the precision of a double, using a float means you can still send very large numbers with only 4 bytes (rather than 8 bytes for Doubles). If you need support for sending Doubles, please create a GitHub issue and I can try to add a CVar to switch to Doubles.
+**As a result**, FreeNet has been designed to write _all_ numbers as **floats**. Unless you require the precision of a double, using a float means you can still send very large numbers (integers and decimals) with only 4 bytes rather than 8 bytes for Doubles. If you need support for sending Doubles, please create a GitHub issue and I can try to add a CVar to switch to Doubles.
