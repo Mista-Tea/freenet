@@ -40,6 +40,10 @@ fnet = fnet or {}
 --	as long as the given net message name has been networked with 
 --	util.AddNetworkString().
 --
+--	http://wiki.garrysmod.com/page/net/SendToServer
+--	
+--	@param nwstr  - the name of the net message being written
+--	@param ...    - varags (comma separated list of values)
 --]]--
 function fnet.SendToServer( nwstr, ... )
 	fnet.Write( { ... } )
