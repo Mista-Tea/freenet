@@ -46,6 +46,6 @@ fnet = fnet or {}
 --	@param ...    - varags (comma separated list of values)
 --]]--
 function fnet.SendToServer( nwstr, ... )
-	fnet.Write( { ... } )
+	fnet.Write( nwstr, { ... } )
 	net.SendToServer()
 end
