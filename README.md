@@ -37,7 +37,7 @@ net.Send( player.GetBySteamID( "STEAM_0:0:xxxxxx" ) )
 
 This can be significantly reduced using fnet.Send:
 
-``` fnet.Send( "Example2", "GitHub <3", Color( 255, 0, 0 ), 100, { "John Doe", "Dohn Joe" } ) ```
+``` fnet.Send( "Example2", player.GetBySteamID( "STEAM_0:0:xxxxxx" ), "GitHub <3", Color( 255, 0, 0 ), 100, { "John Doe", "Dohn Joe" } ) ```
 
 ### net.SendToServer()
 FreeNet also provides the ability to send messages from the client to the server while automatically writing parameters for you. The syntax is identicle to fnet.Broadcast:
