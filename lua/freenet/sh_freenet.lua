@@ -72,7 +72,7 @@ local types = {
 	Vehicle = net.WriteEntity,
 	Weapon  = net.WriteEntity,
 	Vector  = net.WriteVector,
-	boolean = net.WriteBit,
+	boolean = net.WriteBool,
 	number  = net.WriteFloat,
 	table   = function( v ) 
 				if ( IsColor( v ) ) then net.WriteColor( v ) 
