@@ -135,7 +135,7 @@ if ( SERVER ) then
 		RunConsoleCommand( "freenet_debug", arg )
 	end, "Sets whether developer messages should be printed to console (1) or not (0)", 0 )
 	
-elseif ( CLIENT ) 
+elseif ( CLIENT ) then
 	
 	function fnet.SendToServer( nwstr, ... )
 		fnet.Write( nwstr, { ... } )
