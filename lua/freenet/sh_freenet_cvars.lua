@@ -82,7 +82,7 @@ if ( SERVER ) then
 		if ( not ply:IsAdmin() ) then return false end
 		
 		local num = tonumber( arg )
-		if ( !num ) then return false end
+		if ( not num ) then return false end
 		
 		return num >= 1 and "1" or "0"
 	end
@@ -101,7 +101,7 @@ if ( SERVER ) then
 		
 		if ( override == false ) then return end
 		local arg = validateArg( ply, args[1] )
-		if ( !arg ) then return end
+		if ( not arg ) then return end
 		
 		RunConsoleCommand( "freenet_errors", arg )
 	end, "Sets whether description (1) or default (0) error messages are printed to console", 0 )
@@ -119,7 +119,7 @@ if ( SERVER ) then
 		
 		if ( override == false ) then return end
 		local arg = validateArg( ply, args[1] )
-		if ( !arg ) then return end
+		if ( not arg ) then return end
 		
 		RunConsoleCommand( "freenet_debug", arg )
 	end, "Sets whether developer messages should be printed to console (1) or not (0)", 0 )

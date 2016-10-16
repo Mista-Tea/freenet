@@ -98,7 +98,7 @@ local types = {
 --	@param values - the table of values to write to the current net message
 --]]--
 function fnet.Write( nwstr, values )
-	if ( !nwstr and fnet.Errors:GetBool() ) then error( MISSING_NAME ) end
+	if ( not nwstr and fnet.Errors:GetBool() ) then error( MISSING_NAME ) end
 
 	net.Start( nwstr )
 	
@@ -109,7 +109,7 @@ function fnet.Write( nwstr, values )
 		value = values[i]
 		TYPE = type( value )
 
-		if ( !types[ TYPE ] ) then 
+		if ( not types[ TYPE ] ) then 
 			error( UNCHECKED_TYPE:format( nwstr, TYPE ) )
 		end
 		
