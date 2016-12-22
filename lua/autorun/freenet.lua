@@ -84,7 +84,7 @@ if ( SERVER ) then
 	
 	function fnet.SendOmit( nwstr, ply, ... )
 		if ( fnet.Debug:GetBool() ) then print( debug:format( "fnet.SendOmit", nwstr or "nil", ply or "nil", unpack( {...} ) or "nil" ) ) end
-		if ( !ply and fnet.Errors:GetBool() ) then error( "Tried to send net message without an omitted player (parameter #2 [player/table])" ) end
+		if ( not ply and fnet.Errors:GetBool() ) then error( "Tried to send net message without an omitted player (parameter #2 [player/table])" ) end
 		
 		fnet.Write( nwstr, {...} )
 		net.SendOmit( ply )
@@ -92,7 +92,7 @@ if ( SERVER ) then
 	
 	function fnet.SendPVS( nwstr, vec, ... )
 		if ( fnet.Debug:GetBool() ) then print( debug:format( "fnet.SendPVS", nwstr or "nil", vec or "nil", unpack( {...} ) or "nil" ) ) end
-		if ( (!vec or !isvector( vec )) and fnet.Errors:GetBool() ) then error( "Tried to send net message without PVS position (parameter #2 [vector])" ) end 
+		if ( not (vec and isvector( vec )) and fnet.Errors:GetBool() ) then error( "Tried to send net message without PVS position (parameter #2 [vector])" ) end 
 		
 		fnet.Write( nwstr, {...} )
 		net.SendPVS( vec )
@@ -100,7 +100,7 @@ if ( SERVER ) then
 
 	function fnet.SendPAS( nwstr, vec, ... )
 		if ( fnet.Debug:GetBool() ) then print( debug:format( "fnet.SendPAS", nwstr or "nil", vec or "nil", unpack( {...} ) or "nil" ) ) end
-		if ( (!vec or !isvector( vec )) and fnet.Errors:GetBool() ) then error( "Tried to send net message without PAS position (parameter #2 [vector])" ) end
+		if ( not (vec and isvector( vec )) and fnet.Errors:GetBool() ) then error( "Tried to send net message without PAS position (parameter #2 [vector])" ) end
 		
 		fnet.Write( nwstr, {...} )
 		net.SendPAS( vec )
@@ -110,7 +110,7 @@ if ( SERVER ) then
 		if ( not ply:IsAdmin() ) then return false end
 		
 		local num = tonumber( arg )
-		if ( !num ) then return false end
+		if ( not num ) then return false end
 		
 		return num >= 1 and "1" or "0"
 	end
@@ -120,7 +120,7 @@ if ( SERVER ) then
 		
 		if ( override == false ) then return end
 		local arg = validateArg( ply, args[1] )
-		if ( !arg ) then return end
+		if ( not arg ) then return end
 		
 		RunConsoleCommand( "freenet_errors", arg )
 	end, "Sets whether description (1) or default (0) error messages are printed to console", 0 )
@@ -130,7 +130,7 @@ if ( SERVER ) then
 		
 		if ( override == false ) then return end
 		local arg = validateArg( ply, args[1] )
-		if ( !arg ) then return end
+		if ( not arg ) then return end
 		
 		RunConsoleCommand( "freenet_debug", arg )
 	end, "Sets whether developer messages should be printed to console (1) or not (0)", 0 )
@@ -164,7 +164,7 @@ local types = {
 }
 
 function fnet.Write( nwstr, values )
-	if ( !nwstr and fnet.Errors:GetBool() ) then error( MISSING_NAME ) end
+	if ( not nwstr and fnet.Errors:GetBool() ) then error( MISSING_NAME ) end
 
 	net.Start( nwstr )
 	
@@ -175,7 +175,7 @@ function fnet.Write( nwstr, values )
 		value = values[i]
 		TYPE = type( value )
 
-		if ( !types[ TYPE ] ) then 
+		if ( not types[ TYPE ] ) then 
 			error( UNCHECKED_TYPE:format( nwstr, TYPE ) )
 		end
 		
